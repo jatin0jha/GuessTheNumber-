@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guessing Game</title>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #eaeaea;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 500px;
+      background: #fff;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    h1 {
+      color: #5d5dff;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      color: #333;
+      font-size: 1rem;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 0.5rem;
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+      box-sizing: border-box;
+    }
+
+    button {
+      background-color: #5d5dff;
+      color: white;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #4c4cff;
+    }
+
+    #message,
+    #attempts {
+      color: #5d5dff;
+      font-weight: b
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Guessing Game</h1>
+    <p>Try to guess the number between 1 and 1000.</p>
+    <input type="text" id="guessInput" placeholder="Enter your guess" />
+    <button id="guessButton">Submit Guess</button>
+    <p id="message"></p>
+    <p id="attempts"></p>
+  </div>
+  <script>
+    const $ = id => document.getElementById(id), num = Math.floor(Math.random() * 1000) + 1;
+    let attempts = 0;
+
+    $('guessButton').onclick = () => {
+      let guess = +$('guessInput').value, msg = $('message');
+      attempts++;
+      msg.innerText = guess < 1 || guess > 1000 ? "Enter a number between 1 and 1000." :
+        guess !== num ? `Your number is ${guess > num ? 'greater' : 'smaller'}.` :
+          `Congratulations! You got it right.`, $('attempts').innerText = guess === num ? `You scored ${20 - attempts} out of 20! Guesses: ${attempts}.` : `Attempts: ${attempts}`;
+      if (guess === num || attempts >= 20) {
+        msg.innerText = guess === num ? msg.innerText : `All 20 attempts used. The number was ${num}.`;
+        $('guessButton').disabled = true;
+      }
+    };
+  </script>
+</body>
+
+</html>
